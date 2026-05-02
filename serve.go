@@ -102,9 +102,14 @@ func serve(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("register dialogs tool: %w", err)
 	}
 
-	err = server.RegisterTool("tg_send", "Send draft message to dialog", client.SendDraft)
+	err = server.RegisterTool("tg_send", "Send a text message to a dialog (delivered to the peer)", client.SendText)
 	if err != nil {
-		return fmt.Errorf("register dialogs tool: %w", err)
+		return fmt.Errorf("register send tool: %w", err)
+	}
+
+	err = server.RegisterTool("tg_save_draft", "Save a draft in the composer for a dialog (not sent)", client.SendDraft)
+	if err != nil {
+		return fmt.Errorf("register draft tool: %w", err)
 	}
 
 	err = server.RegisterTool("tg_read", "Mark dialog messages as read", client.ReadHistory)
